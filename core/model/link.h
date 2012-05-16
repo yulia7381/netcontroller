@@ -5,9 +5,9 @@
 
 class Link {
 public:
-	Link(uint id, Node node1, Node node2) : id(id), node1(node1), node2(node2) {};
+	Link(unsigned int id, Node node1, Node node2) : id(id), node1(node1), node2(node2) {};
 private:
-	uint id;
+	unsigned int id;
 	Node node1;
 	Node node2;
 };

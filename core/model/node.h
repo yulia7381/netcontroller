@@ -3,14 +3,14 @@
 
 #include <string>
 
-#include "node_type.h"
+#include "enums.h"
 
 class Node {
 public:
-    Node(uint id, std::string name, std::string code) : id(id), name(name), code(code) {};
+    Node(unsigned int id, std::string name, std::string code) : id(id), name(name), code(code) {};
 
 private:
-    uint id;
+    unsigned int id;
     std::string name;
     std::string code;
 };

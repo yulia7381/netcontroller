@@ -10,7 +10,8 @@ enum NodeType {
 enum UserRole {
     ADMIN,
     HELPDESK,
-    REPAIRER
+    REPAIRER,
+    UNDEFINED
 };
 
 #endif

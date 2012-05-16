@@ -14,7 +14,17 @@ public:
 
     bool createUser(const User& user);
     bool deleteUser(unsigned long id);
+
+    UserService();
+    ~UserService();
 private:
+    std::map<unsigned long, User> users;
+    std::map<std::string, User> user_logins;
+
+    unsigned long next_id;
+
+    bool save();
+    void read();
 
 };
 

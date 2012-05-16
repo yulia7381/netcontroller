@@ -8,15 +8,15 @@
 
 class Node {
 public:
-    Node(unsigned int id, std::string name, std::string code, Position position) : id(id), name(name), code(code), position(position) {};
+    Node(unsigned long id, std::string name, std::string code, Position position) : id(id), name(name), code(code), position(position) {};
 
-    unsigned int getId() {return id;}
+    unsigned long getId() {return id;}
     std::string getName() {return name;}
     std::string getCode() {return code;}
     Position getPosition() {return position;}
 
 private:
-    unsigned int id;
+    unsigned long id;
     std::string name;
     std::string code;
     Position position;

@@ -7,13 +7,6 @@ enum NodeType {
     ROUTER
 };
 
-enum NodeStatus {
-    OK,
-    NETWORK_PROBLEMS,
-    OVERLOAD,
-    HIGH_LATENCY
-};
-
 enum UserRole {
     ADMIN,
     HELPDESK,

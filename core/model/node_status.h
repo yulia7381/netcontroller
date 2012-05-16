@@ -4,7 +4,7 @@
 class NodeStatus {
 public:
     NodeStatus(unsigned long time, unsigned long load_average, unsigned long memory_usage, unsigned long network_throughput, unsigned long latency)
-        : time(time), load_average(load_average), network_throughput(network_throughput), latency(latency) {}
+        : time(time), load_average(load_average), memory_usage(memory_usage), network_throughput(network_throughput), latency(latency) {}
 
     unsigned long getTime() {return time;}
     unsigned long getLoadAverage() {return load_average;}

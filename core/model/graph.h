@@ -7,7 +7,10 @@
 
 class Graph {
 public:
-    Graph(std::list<Link> links) : links(link) {};
+
+    Graph(std::list<Link> links) : links(links) {
+
+    };
 private:
     std::list<Link> links;
 };

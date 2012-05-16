@@ -2,12 +2,14 @@
 #define GRAPHWIDGET_H
 
 #include <QtGui/QGraphicsView>
+#include "../core/model/graph.h"
 
 class GraphicNode;
+class GraphicEdge;
 
 class GraphWidget: public QGraphicsView {
 public:
-	GraphWidget(QWidget *parent = 0);
+	GraphWidget(Graph *graphInfo, QWidget *parent = 0);
 
 	void itemMoved();
 
@@ -27,6 +29,13 @@ protected:
 private:
 	int timerId;
 	GraphicNode *centerNode;
+	Graph* graphInfo;
+	QList<GraphicNode> nodes;
+	QList<GraphicEdge> edges;
+
+
+private:
+	QGraphicsScene* initScene(Graph *graphInfo);
 };
 
 #endif

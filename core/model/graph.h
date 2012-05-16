@@ -11,6 +11,9 @@ public:
     Graph(std::list<Link> links) : links(links) {
 
     };
+
+    const std::list<Link>& getLinks() const {return links; }
+
 private:
     std::list<Link> links;
 };

@@ -7,11 +7,13 @@
 #include "GraphicNode.h"
 #include "GraphWidget.h"
 
-GraphicNode::GraphicNode(GraphWidget *graphWidget) : graph(graphWidget) {
+GraphicNode::GraphicNode(GraphWidget *graphWidget, Node *nodeInfo)
+		: graph(graphWidget), nodeInfo(nodeInfo) {
 	setFlag(ItemIsMovable);
 	setFlag(ItemSendsGeometryChanges);
 	setCacheMode(DeviceCoordinateCache);
 	setZValue(-1);
+	setPos(nodeInfo->getPosition().getX(), nodeInfo->getPosition().getY());
 }
 
 void GraphicNode::addEdge(GraphicEdge *edge) {
@@ -73,8 +75,9 @@ void GraphicNode::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
 QVariant GraphicNode::itemChange(GraphicsItemChange change, const QVariant &value) {
 	switch (change) {
 	case ItemPositionHasChanged:
-		foreach (GraphicEdge *edge, edgeList)
+		foreach (GraphicEdge *edge, edgeList) {
 			edge->adjust();
+		}
 		graph->itemMoved();
 		break;
 	default:

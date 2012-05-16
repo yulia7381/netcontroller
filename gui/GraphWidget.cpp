@@ -6,11 +6,9 @@
 
 #include <qmath.h>
 
-GraphWidget::GraphWidget(QWidget *parent) :
-	QGraphicsView(parent), timerId(0) {
-	QGraphicsScene *scene = new QGraphicsScene(this);
-	scene->setItemIndexMethod(QGraphicsScene::NoIndex);
-	scene->setSceneRect(-200, -200, 400, 400);
+GraphWidget::GraphWidget(Graph *graphInfo, QWidget *parent) :
+		QGraphicsView(parent), timerId(0), graphInfo(graphInfo) {
+	QGraphicsScene *scene = initScene(graphInfo);
 	setScene(scene);
 	setCacheMode(CacheBackground);
 	setViewportUpdateMode(BoundingRectViewportUpdate);
@@ -20,15 +18,24 @@ GraphWidget::GraphWidget(QWidget *parent) :
 	setMinimumSize(400, 400);
 	setWindowTitle(tr("Network View"));
 
-	GraphicNode *node1 = new GraphicNode(this);
-	GraphicNode *node2 = new GraphicNode(this);
-	GraphicNode *node3 = new GraphicNode(this);
-	GraphicNode *node4 = new GraphicNode(this);
-	centerNode = new GraphicNode(this);
-	GraphicNode *node6 = new GraphicNode(this);
-	GraphicNode *node7 = new GraphicNode(this);
-	GraphicNode *node8 = new GraphicNode(this);
-	GraphicNode *node9 = new GraphicNode(this);
+	GraphicNode *node1 = new GraphicNode(this,
+			new Node(1, "node1", "code1", Position(10, 10, 1, 2)));
+	GraphicNode *node2 = new GraphicNode(this,
+			new Node(1, "node1", "code1", Position(20, 20, 1, 2)));
+	GraphicNode *node3 = new GraphicNode(this,
+			new Node(1, "node1", "code1", Position(30, 30, 1, 2)));
+	GraphicNode *node4 = new GraphicNode(this,
+			new Node(1, "node1", "code1", Position(40, 20, 1, 2)));
+	centerNode = new GraphicNode(this,
+			new Node(1, "node1", "code1", Position(50, 60, 1, 2)));
+	GraphicNode *node6 = new GraphicNode(this,
+			new Node(1, "node1", "code1", Position(50, 70, 1, 2)));
+	GraphicNode *node7 = new GraphicNode(this,
+			new Node(1, "node1", "code1", Position(70, 80, 1, 2)));
+	GraphicNode *node8 = new GraphicNode(this,
+			new Node(1, "node1", "code1", Position(90, 70, 1, 2)));
+	GraphicNode *node9 = new GraphicNode(this,
+			new Node(1, "node1", "code1", Position(80, 90, 1, 2)));
 	scene->addItem(node1);
 	scene->addItem(node2);
 	scene->addItem(node3);
@@ -53,15 +60,15 @@ GraphWidget::GraphWidget(QWidget *parent) :
 	scene->addItem(new GraphicEdge(node9, node1));
 	scene->addItem(new GraphicEdge(node9, node2));
 
-	node1->setPos(-50, -50);
-	node2->setPos(0, -50);
-	node3->setPos(50, -50);
-	node4->setPos(-50, 0);
-	centerNode->setPos(0, 0);
-	node6->setPos(50, 0);
-	node7->setPos(-50, 50);
-	node8->setPos(0, 50);
-	node9->setPos(50, 50);
+}
+
+QGraphicsScene* GraphWidget::initScene(Graph *graphInfo) {
+	QGraphicsScene *scene = new QGraphicsScene(this);
+	scene->setItemIndexMethod(QGraphicsScene::NoIndex);
+	scene->setSceneRect(-200, -200, 400, 400);
+	const std::list<Link> links = graphInfo->getLinks();
+
+	return scene;
 }
 
 void GraphWidget::itemMoved() {
@@ -102,11 +109,9 @@ void GraphWidget::timerEvent(QTimerEvent *event) {
 
 }
 
-
 void GraphWidget::wheelEvent(QWheelEvent *event) {
 	scaleView(qPow((double) 2, -event->delta() / 240.0));
 }
-
 
 void GraphWidget::drawBackground(QPainter *painter, const QRectF &rect) {
 	Q_UNUSED(rect);
@@ -131,7 +136,6 @@ void GraphWidget::drawBackground(QPainter *painter, const QRectF &rect) {
 	painter->drawRect(sceneRect);
 
 }
-
 
 void GraphWidget::scaleView(qreal scaleFactor) {
 	qreal factor = transform().scale(scaleFactor, scaleFactor).mapRect(

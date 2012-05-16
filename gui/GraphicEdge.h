@@ -1,5 +1,5 @@
-#ifndef EDGE_H
-#define EDGE_H
+#ifndef GRAPHIC_EDGE_H
+#define GRAPHIC_EDGE_H
 
 #include <QGraphicsItem>
 

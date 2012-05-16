@@ -1,8 +1,9 @@
-#ifndef NODE_H
-#define NODE_H
+#ifndef GRAPHIC_NODE_H
+#define GRAPHIC_NODE_H
 
 #include <QGraphicsItem>
 #include <QList>
+#include "../core/model/node.h"
 
 class GraphicEdge;
 class GraphWidget;
@@ -12,7 +13,7 @@ QT_END_NAMESPACE
 
 class GraphicNode: public QGraphicsItem {
 public:
-	GraphicNode(GraphWidget *graphWidget);
+	GraphicNode(GraphWidget *graphWidget, Node *nodeInfo);
 
 	void addEdge(GraphicEdge *edge);
 	QList<GraphicEdge *> edges() const;
@@ -41,6 +42,7 @@ private:
 	QList<GraphicEdge *> edgeList;
 	QPointF newPos;
 	GraphWidget *graph;
+	Node* nodeInfo;
 };
 
 #endif

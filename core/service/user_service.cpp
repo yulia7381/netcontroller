@@ -1,47 +1,58 @@
 #include "user_service.h"
 
 #include <fstream>
+#include <ios>
 
 #define USERS_FILE_NAME "users.ncr"
 
-User& UserService::getUser(unsigned long id) const {
-    return users[id];
+const User& UserService::getUser(unsigned long id) const {
+    std::map<unsigned long, User>::const_iterator it = users.find(id);
+    if (it == users.end()) {
+        return empty_user;
+    } else {
+        return it->second;
+    }
 }
 
-User& UserService::getUser(std::string& login) const {
-    return user_logins[login];
+const User& UserService::getUser(std::string& login) const {
+    std::map<std::string, User>::const_iterator it = user_logins.find(login);
+    if (it == user_logins.end()) {
+        return empty_user;
+    } else {
+        return it->second;
+    }
 }
 
 bool UserService::checkAccess(std::string& login, std::string& password) const {
     User user = getUser(login);
-    return user != NULL && user.getPasswordHash() == password;
+    return user.getPasswordHash() == password;
 }
 
 bool UserService::createUser(const User& user) {
     unsigned long new_id = next_id++;
-    User new_user = new User(
+    User new_user(
         new_id,
         user.getName(),
         user.getPasswordHash(),
         user.getRole()
         );
 
-    users.insert(std::pair(new_id, new_user));
-    user_logins.insert(std::pair(new_user.getName(), new_user));
+    users.insert(std::make_pair(new_id, new_user));
+    user_logins.insert(std::make_pair(new_user.getName(), new_user));
 
     return save();
 }
 
 bool UserService::deleteUser(unsigned long id) {
     User user = getUser(id);
-    if (user == NULL) {
+    if (user == empty_user) {
         return false;
     }
 
     users.erase(id);
     user_logins.erase(user.getName());
 
-    return save()
+    return save();
 }
 
 UserService::UserService() : next_id(1) {
@@ -53,12 +64,12 @@ UserService::~UserService() {
 }
 
 bool UserService::save() {
-    std::ofstream out(USERS_FILE_NAME, ios::out);
+    std::ofstream out(USERS_FILE_NAME, std::ios::out);
 
     out << "id:" << next_id << "\n";
     out << "count:" << users.size() << "\n";
-    for (map<unsigned int, User>::iterator it = users.begin(); it != users.end(); ++it) {
-        out << it->second() << "\n";
+    for (std::map<unsigned long, User>::iterator it = users.begin(); it != users.end(); ++it) {
+        out << it->second << "\n";
     }
 
     out.close();
@@ -66,19 +77,19 @@ bool UserService::save() {
 }
 
 void UserService::read() {
-    std::ifstream in(USERS_FILE_NAME, ios::in);
+    std::ifstream in(USERS_FILE_NAME, std::ios::in);
     size_t count = 0;
 
     if (in.is_open()) {
-        in >> next_id >> "\n";
-        in >> count >> "\n";
+        in >> next_id;
+        in >> count;
 
         for (int i = 0; i < count; ++i) {
-            User user = new User();
-            in >> user >> "\n";
+            User user;
+            in >> user;
 
-            users.insert(std::pair(user.getId(), user));
-            user_logins.insert(std::pair(user.getName(), user));
+            users.insert(std::make_pair(user.getId(), user));
+            user_logins.insert(std::make_pair(user.getName(), user));
         }
 
     }

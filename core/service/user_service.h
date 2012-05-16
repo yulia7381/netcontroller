@@ -2,13 +2,14 @@
 #define USER_SERVICE_H
 
 #include <string>
+#include <map>
 
 #include "../model/user.h"
 
 class UserService {
 public:
-    User& getUser(unsigned long id) const;
-    User& getUser(std::string& login) const;
+    const User& getUser(unsigned long id) const;
+    const User& getUser(std::string& login) const;
 
     bool checkAccess(std::string& login, std::string& password) const;
 
@@ -22,6 +23,7 @@ private:
     std::map<std::string, User> user_logins;
 
     unsigned long next_id;
+    User empty_user;
 
     bool save();
     void read();

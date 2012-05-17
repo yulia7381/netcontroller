@@ -48,7 +48,7 @@ private:
 	Node* nodeInfo;
 
 signals:
-	void nodeClickedSignal();
+	void nodeClickedSignal(GraphicNode* clickedNode);
 };
 
 #endif

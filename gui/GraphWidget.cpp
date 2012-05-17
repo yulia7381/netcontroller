@@ -7,7 +7,7 @@
 #include <qmath.h>
 
 GraphWidget::GraphWidget(Graph *graphInfo, QWidget *parent) :
-		QGraphicsView(parent), timerId(0), graphInfo(graphInfo) {
+		QGraphicsView(parent), timerId(0), graphInfo(graphInfo), firstSelected(0), secondSelected(0) {
 	QGraphicsScene *scene = initScene(graphInfo);
 	setScene(scene);
 	setCacheMode(CacheBackground);
@@ -149,7 +149,19 @@ void GraphWidget::zoomOut() {
 	scaleView(1 / qreal(1.2));
 }
 
-void GraphWidget::nodeClickedSlot(){
-	qDebug() << "Clicked: " << 999;
+void GraphWidget::nodeClickedSlot(GraphicNode* clickedNode){
+	if(firstSelected == 0) {
+		firstSelected = clickedNode;
+	} else {
+		secondSelected = clickedNode;
+		processSelectedNodes();
+		firstSelected = secondSelected = NULL;
+	}
+}
+
+void GraphWidget::processSelectedNodes(){
+	GraphicEdge* newEdge = new GraphicEdge(firstSelected, secondSelected);
+	edges.insert(newEdge);
+	this->scene()->addItem(newEdge);
 }
 

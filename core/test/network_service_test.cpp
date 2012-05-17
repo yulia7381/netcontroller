@@ -1,13 +1,13 @@
 #include "../service/network_service.h"
-#include "../model/Node.h"
-#include "../model/Link.h"
-#include "../model/Graph.h"
+#include "../model/node.h"
+#include "../model/link.h"
+#include "../model/graph.h"
 
 
 #include <string>
 #include <iostream>
 
-int main() {
+int main3() {
     NetworkService ns;
 
     // Node n1(0, "name1", "code1", Position(1,2, 5,1));
@@ -22,7 +22,7 @@ int main() {
 
 
     // Graph gr(links);
-    
+
     // ns.saveGraph(gr);
     std::cout << "start";
     Graph gr = ns.getGraph();

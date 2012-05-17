@@ -17,7 +17,7 @@ GraphicNode::GraphicNode(GraphWidget *graphWidget, Node *nodeInfo)
 	setZValue(-1);
 	setPos(nodeInfo->getPosition().getX(), nodeInfo->getPosition().getY());
 
-    QObject::connect(this, SIGNAL(nodeClickedSignal()), graph, SLOT(nodeClickedSlot()));
+    QObject::connect(this, SIGNAL(nodeClickedSignal(GraphicNode*)), graph, SLOT(nodeClickedSlot(GraphicNode*)));
 }
 
 void GraphicNode::addEdge(GraphicEdge *edge) {
@@ -96,7 +96,7 @@ QVariant GraphicNode::itemChange(GraphicsItemChange change, const QVariant &valu
 void GraphicNode::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	update();
 	QGraphicsItem::mousePressEvent(event);
-    emit nodeClickedSignal();
+    emit nodeClickedSignal(this);
 }
 
 void GraphicNode::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {

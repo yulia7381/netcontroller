@@ -25,7 +25,7 @@ public slots:
 	void shuffle();
 	void zoomIn();
 	void zoomOut();
-	void nodeClickedSlot();
+	void nodeClickedSlot(GraphicNode* clickedNode);
 
 protected:
 	void keyPressEvent(QKeyEvent *event);
@@ -43,11 +43,16 @@ private:
 	QSet<GraphicEdge*> edges;
 	QHash<Node*, GraphicNode*> nodeInfoToGNode;
 
+	GraphicNode* firstSelected;
+	GraphicNode* secondSelected;
+
+
 private:
 	QGraphicsScene* initScene(Graph *graphInfo);
 	GraphicNode* getGNode(Node * nodeInfo);
 	void addNodes(QGraphicsScene* scene, const QSet<GraphicNode*> &set);
 	void addEdges(QGraphicsScene* scene, const QSet<GraphicEdge*> &set);
+	void processSelectedNodes();
 
 
 };

@@ -18,47 +18,48 @@ GraphWidget::GraphWidget(Graph *graphInfo, QWidget *parent) :
 	setMinimumSize(400, 400);
 	setWindowTitle(tr("Network View"));
 
-	GraphicNode *node1 = new GraphicNode(this,
-			new Node(1, "node1", "code1", Position(10, 10, 1, 2)));
-	GraphicNode *node2 = new GraphicNode(this,
-			new Node(1, "node1", "code1", Position(20, 20, 1, 2)));
-	GraphicNode *node3 = new GraphicNode(this,
-			new Node(1, "node1", "code1", Position(30, 30, 1, 2)));
-	GraphicNode *node4 = new GraphicNode(this,
-			new Node(1, "node1", "code1", Position(40, 20, 1, 2)));
-	centerNode = new GraphicNode(this,
-			new Node(1, "node1", "code1", Position(50, 60, 1, 2)));
-	GraphicNode *node6 = new GraphicNode(this,
-			new Node(1, "node1", "code1", Position(50, 70, 1, 2)));
-	GraphicNode *node7 = new GraphicNode(this,
-			new Node(1, "node1", "code1", Position(70, 80, 1, 2)));
-	GraphicNode *node8 = new GraphicNode(this,
-			new Node(1, "node1", "code1", Position(90, 70, 1, 2)));
-	GraphicNode *node9 = new GraphicNode(this,
-			new Node(1, "node1", "code1", Position(80, 90, 1, 2)));
-	scene->addItem(node1);
-	scene->addItem(node2);
-	scene->addItem(node3);
-	scene->addItem(node4);
-	scene->addItem(centerNode);
-	scene->addItem(node6);
-	scene->addItem(node7);
-	scene->addItem(node8);
-	scene->addItem(node9);
-	scene->addItem(new GraphicEdge(node1, node2));
-	scene->addItem(new GraphicEdge(node2, node3));
-	scene->addItem(new GraphicEdge(node2, centerNode));
-	scene->addItem(new GraphicEdge(node3, node6));
-	scene->addItem(new GraphicEdge(node4, node1));
-	scene->addItem(new GraphicEdge(node4, centerNode));
-	scene->addItem(new GraphicEdge(centerNode, node6));
-	scene->addItem(new GraphicEdge(centerNode, node8));
-	scene->addItem(new GraphicEdge(node6, node9));
-	scene->addItem(new GraphicEdge(node7, node4));
-	scene->addItem(new GraphicEdge(node8, node7));
-	scene->addItem(new GraphicEdge(node9, node8));
-	scene->addItem(new GraphicEdge(node9, node1));
-	scene->addItem(new GraphicEdge(node9, node2));
+
+//	GraphicNode *node1 = new GraphicNode(this,
+//			new Node(1, "node1", "code1", Position(10, 10, 1, 2)));
+//	GraphicNode *node2 = new GraphicNode(this,
+//			new Node(1, "node1", "code1", Position(20, 20, 1, 2)));
+//	GraphicNode *node3 = new GraphicNode(this,
+//			new Node(1, "node1", "code1", Position(30, 30, 1, 2)));
+//	GraphicNode *node4 = new GraphicNode(this,
+//			new Node(1, "node1", "code1", Position(40, 20, 1, 2)));
+//	centerNode = new GraphicNode(this,
+//			new Node(1, "node1", "code1", Position(50, 60, 1, 2)));
+//	GraphicNode *node6 = new GraphicNode(this,
+//			new Node(1, "node1", "code1", Position(50, 70, 1, 2)));
+//	GraphicNode *node7 = new GraphicNode(this,
+//			new Node(1, "node1", "code1", Position(70, 80, 1, 2)));
+//	GraphicNode *node8 = new GraphicNode(this,
+//			new Node(1, "node1", "code1", Position(90, 70, 1, 2)));
+//	GraphicNode *node9 = new GraphicNode(this,
+//			new Node(1, "node1", "code1", Position(80, 90, 1, 2)));
+//	scene->addItem(node1);
+//	scene->addItem(node2);
+//	scene->addItem(node3);
+//	scene->addItem(node4);
+//	scene->addItem(centerNode);
+//	scene->addItem(node6);
+//	scene->addItem(node7);
+//	scene->addItem(node8);
+//	scene->addItem(node9);
+//	scene->addItem(new GraphicEdge(node1, node2));
+//	scene->addItem(new GraphicEdge(node2, node3));
+//	scene->addItem(new GraphicEdge(node2, centerNode));
+//	scene->addItem(new GraphicEdge(node3, node6));
+//	scene->addItem(new GraphicEdge(node4, node1));
+//	scene->addItem(new GraphicEdge(node4, centerNode));
+//	scene->addItem(new GraphicEdge(centerNode, node6));
+//	scene->addItem(new GraphicEdge(centerNode, node8));
+//	scene->addItem(new GraphicEdge(node6, node9));
+//	scene->addItem(new GraphicEdge(node7, node4));
+//	scene->addItem(new GraphicEdge(node8, node7));
+//	scene->addItem(new GraphicEdge(node9, node8));
+//	scene->addItem(new GraphicEdge(node9, node1));
+//	scene->addItem(new GraphicEdge(node9, node2));
 
 }
 
@@ -66,8 +67,20 @@ QGraphicsScene* GraphWidget::initScene(Graph *graphInfo) {
 	QGraphicsScene *scene = new QGraphicsScene(this);
 	scene->setItemIndexMethod(QGraphicsScene::NoIndex);
 	scene->setSceneRect(-200, -200, 400, 400);
-	const std::list<Link> links = graphInfo->getLinks();
-
+	const std::list<Link> &links = graphInfo->getLinks();
+	for (std::list<Link>::const_iterator it = links.begin(); it != links.end();
+			++it) {
+		Link link = *it;
+		GraphicNode *node1 = new GraphicNode(this, new Node(link.getNode1()));
+		GraphicNode *node2 = new GraphicNode(this, new Node(link.getNode2()));
+		GraphicEdge *edge = new GraphicEdge(node1, node2);
+		nodes.append(node1);
+		nodes.append(node2);
+		edges.append(edge);
+		scene->addItem(node1);
+		scene->addItem(node2);
+		scene->addItem(edge);
+	}
 	return scene;
 }
 

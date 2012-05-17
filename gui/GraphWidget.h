@@ -30,8 +30,8 @@ private:
 	int timerId;
 	GraphicNode *centerNode;
 	Graph* graphInfo;
-	QList<GraphicNode> nodes;
-	QList<GraphicEdge> edges;
+	QList<GraphicNode*> nodes;
+	QList<GraphicEdge*> edges;
 
 
 private:

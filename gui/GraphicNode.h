@@ -21,17 +21,11 @@ public:
 	void addEdge(GraphicEdge *edge);
 	QList<GraphicEdge *> edges() const;
 
-	enum {
-		Type = UserType + 1
-	};
-	int type() const {
-		return Type;
-	}
-
 	bool advance();
 
 	QRectF boundingRect() const;
 	QPainterPath shape() const;
+	Node* getNodeInfo() const { return nodeInfo; }
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 			QWidget *widget);
 

@@ -20,6 +20,8 @@ public:
     Position getPosition() const {return position;}
 
     void setId(unsigned long _id) {id = _id;}
+    void setPosition(const Position& pos) {position = pos;}
+
 
     Node& operator= (const Node& node);
 

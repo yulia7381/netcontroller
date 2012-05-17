@@ -14,6 +14,7 @@ class GraphicEdge;
 
 class GraphWidget: public QGraphicsView {
 
+
 Q_OBJECT;
 
 public:
@@ -21,17 +22,26 @@ public:
 
 	void itemMoved();
 
+	Graph getGraph();
+
 public slots:
 	void shuffle();
 	void zoomIn();
 	void zoomOut();
 	void nodeClickedSlot(GraphicNode* clickedNode);
 
+	void setWaitToAdd(bool val) { waitToAdd = val; }
+	void setWaitToAddEdge(bool val) { waitToAddEdge = val; }
+
+
 protected:
 	void keyPressEvent(QKeyEvent *event);
 	void timerEvent(QTimerEvent *event);
 	void wheelEvent(QWheelEvent *event);
 	void drawBackground(QPainter *painter, const QRectF &rect);
+
+	void mousePressEvent(QMouseEvent *event);
+
 
 	void scaleView(qreal scaleFactor);
 
@@ -45,6 +55,9 @@ private:
 
 	GraphicNode* firstSelected;
 	GraphicNode* secondSelected;
+
+	bool waitToAdd;
+	bool waitToAddEdge;
 
 
 private:

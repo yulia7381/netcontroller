@@ -3,7 +3,8 @@ TARGET = NetDNK
 QT += core \
     gui \
     sql
-HEADERS += ../core/model/enums.h \
+HEADERS += MainWindow.h \
+    ../core/model/enums.h \
     ../core/model/graph.h \
     ../core/model/link.h \
     ../core/model/node.h \
@@ -27,7 +28,8 @@ HEADERS += ../core/model/enums.h \
     ../core/model/link.h \
     ../core/model/node.h \
     ../core/model/user.h
-SOURCES += ../core/model/graph.cpp \
+SOURCES += MainWindow.cpp \
+    ../core/model/graph.cpp \
     ../core/model/link.cpp \
     ../core/model/node.cpp \
     ../core/model/node_status.cpp \

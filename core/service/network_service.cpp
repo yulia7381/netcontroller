@@ -13,7 +13,7 @@
 Graph NetworkService::getGraph() const {
     int node_count;
     int link_count;
-    
+
     std::ifstream in(NETWORK_FILE_NAME, std::ios::in);
 
     in >> node_count;

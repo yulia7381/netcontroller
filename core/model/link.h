@@ -9,8 +9,8 @@ public:
 	Link(const Link& link) : id(link.id), node1(link.node1), node2(link.node2) {};
 
 	unsigned long getId() {return id;}
-	Node* getNode1() {return node1;}
-	Node* getNode2() {return node2;}
+	Node* getNode1() const {return node1;}
+	Node* getNode2() const {return node2;}
 private:
 	unsigned long id;
 	Node *node1;

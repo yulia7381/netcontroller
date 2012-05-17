@@ -16,7 +16,8 @@ HEADERS += GraphicNode.h \
     ../core/model/link.h \
     ../core/model/node.h \
     ../core/model/user.h
-SOURCES += GraphicNode.cpp \
+SOURCES += GraphicEdge.cpp \
+    GraphicNode.cpp \
     GraphWidget.cpp \
     GraphicEdge.cpp \
     ../core/model/node_status.cpp \
@@ -29,5 +30,5 @@ SOURCES += GraphicNode.cpp \
     ../core/model/node.cpp \
     ../core/model/user.cpp \
     main.cpp
-RESOURCES +=
+RESOURCES += 
 FORMS = 

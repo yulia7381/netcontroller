@@ -14,7 +14,7 @@ const User& UserService::getUser(unsigned long id) const {
     }
 }
 
-const User& UserService::getUser(std::string& login) const {
+const User& UserService::getUser(const std::string& login) const {
     std::map<std::string, User>::const_iterator it = user_logins.find(login);
     if (it == user_logins.end()) {
         return empty_user;
@@ -25,10 +25,14 @@ const User& UserService::getUser(std::string& login) const {
 
 bool UserService::checkAccess(std::string& login, std::string& password) const {
     User user = getUser(login);
-    return user.getPasswordHash() == password;
+    return user != empty_user && user.getPasswordHash() == password;
 }
 
 bool UserService::createUser(const User& user) {
+    if (getUser(user.getName()) != empty_user) {
+        return false;
+    }
+
     unsigned long new_id = next_id++;
     User new_user(
         new_id,
@@ -66,8 +70,8 @@ UserService::~UserService() {
 bool UserService::save() {
     std::ofstream out(USERS_FILE_NAME, std::ios::out);
 
-    out << "id:" << next_id << "\n";
-    out << "count:" << users.size() << "\n";
+    out << next_id << "\n";
+    out << users.size() << "\n";
     for (std::map<unsigned long, User>::iterator it = users.begin(); it != users.end(); ++it) {
         out << it->second << "\n";
     }

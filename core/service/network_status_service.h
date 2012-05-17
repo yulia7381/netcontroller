@@ -9,7 +9,7 @@
 class NetworkStatusService {
 public:
     NodeStatus getNodeStatus(const Node& node) const;
-    bool saveStatus(const Node& node, const NodeStatus status);
+    bool saveStatus(const Node& node, const NodeStatus& status);
 
     std::list<NodeStatus> getStatusHistory(const Node& node) const;
 

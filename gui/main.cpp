@@ -6,13 +6,12 @@
 int main(int argc, char **argv) {
 	QApplication app(argc, argv);
 	qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
-	std::list<Link> links;
+	std::list<Link*> links;
+	Node * node1 = new Node(1,"1","2", Position(10, 15, 1, 7));
 	for(int i = 0; i < 10; i++){
-		links.push_back(Link(
-				i+1,
-				Node(i*i,"","", Position(i*10, i*10+(i%2==0?-5:5), i, i+7)),
-				Node(i*i+1,"","", Position(i*8, i*8+(i%2==0?-5:5), i, i+7))
-		));
+		Node * node2 = new Node(2,"1","2", Position(i*10, (i%2==0 -7 ? : 7) + i*15, 1, 7));
+		links.push_back(new Link(1, node1, node2));
+		node1 = node2;
 	}
 	GraphWidget *widget = new GraphWidget(new Graph(links));
 

@@ -18,7 +18,6 @@ GraphWidget::GraphWidget(Graph *graphInfo, QWidget *parent) :
 	setMinimumSize(400, 400);
 	setWindowTitle(tr("Network View"));
 
-
 //	GraphicNode *node1 = new GraphicNode(this,
 //			new Node(1, "node1", "code1", Position(10, 10, 1, 2)));
 //	GraphicNode *node2 = new GraphicNode(this,
@@ -67,21 +66,42 @@ QGraphicsScene* GraphWidget::initScene(Graph *graphInfo) {
 	QGraphicsScene *scene = new QGraphicsScene(this);
 	scene->setItemIndexMethod(QGraphicsScene::NoIndex);
 	scene->setSceneRect(-200, -200, 400, 400);
-	const std::list<Link> &links = graphInfo->getLinks();
-	for (std::list<Link>::const_iterator it = links.begin(); it != links.end();
+	const std::list<Link*> &links = graphInfo->getLinks();
+	for (std::list<Link*>::const_iterator it = links.begin(); it != links.end();
 			++it) {
-		Link link = *it;
-		GraphicNode *node1 = new GraphicNode(this, new Node(link.getNode1()));
-		GraphicNode *node2 = new GraphicNode(this, new Node(link.getNode2()));
-		GraphicEdge *edge = new GraphicEdge(node1, node2);
-		nodes.append(node1);
-		nodes.append(node2);
-		edges.append(edge);
-		scene->addItem(node1);
-		scene->addItem(node2);
-		scene->addItem(edge);
+		Link* link = *it;
+		GraphicNode *graphNode1 = getGNode(link->getNode1());
+		GraphicNode *graphNode2 = getGNode(link->getNode2());
+		GraphicEdge *edge = new GraphicEdge(graphNode1, graphNode2);
+		nodes.insert(graphNode1);
+		nodes.insert(graphNode2);
+		edges.insert(edge);
 	}
+
+	addNodes(scene, nodes);
+	addEdges(scene, edges);
+
+
 	return scene;
+}
+
+void GraphWidget::addNodes(QGraphicsScene* scene, const QSet<GraphicNode*> &set) {
+	foreach(GraphicNode* item, set) {
+		scene->addItem(item);
+	}
+}
+
+void GraphWidget::addEdges(QGraphicsScene* scene, const QSet<GraphicEdge*> &set) {
+	foreach(GraphicEdge* item, set) {
+		scene->addItem(item);
+	}
+}
+
+GraphicNode * GraphWidget::getGNode(Node * nodeInfo) {
+	if (!nodeInfoToGNode.contains(nodeInfo)) {
+		nodeInfoToGNode.insert(nodeInfo, new GraphicNode(this, nodeInfo));
+	}
+	return nodeInfoToGNode.value(nodeInfo);
 }
 
 void GraphWidget::itemMoved() {

@@ -26,9 +26,10 @@ private:
     UserRole role;
 };
 
-std::istream operator>> (const std::istream& is, const User& u);
-std::ostream operator<< (const std::ostream& os, const User& u);
+std::istream& operator>> (std::istream& is, User& u);
+std::ostream& operator<< (std::ostream& os, const User& u);
 
 bool operator== (const User& u1, const User& u2);
+bool operator!= (const User& u1, const User& u2);
 
 #endif

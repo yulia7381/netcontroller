@@ -9,7 +9,7 @@
 class UserService {
 public:
     const User& getUser(unsigned long id) const;
-    const User& getUser(std::string& login) const;
+    const User& getUser(const std::string& login) const;
 
     bool checkAccess(std::string& login, std::string& password) const;
 

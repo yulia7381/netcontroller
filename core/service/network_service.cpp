@@ -24,10 +24,6 @@ Graph NetworkService::getGraph() const {
         Node * node = new Node();
         in >> *node;
         node_map.insert(std::make_pair(node->getId(), node));
-        std::cout << node->getId();
-        std::cout << node->getName();
-        std::cout << node->getCode();
-
     }
 
     std::list<Link*> links;

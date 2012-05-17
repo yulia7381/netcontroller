@@ -15,6 +15,7 @@ std::istream& operator>> (std::istream& is, User& u) {
 	is >> password_hash;
 	is >> role;
 	u = User(id, name, password_hash, UserRole(role));
+	return is;
 }
 
 std::ostream& operator<< (std::ostream& os, const User& u) {

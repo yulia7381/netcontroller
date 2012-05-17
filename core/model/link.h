@@ -12,8 +12,8 @@ public:
 	const Link& operator=(const Link& link);
 
 	unsigned long getId() {return id;}
-	Node* getNode1() {return node1;}
-	Node* getNode2() {return node2;}
+	Node* getNode1() const {return node1;}
+	Node* getNode2() const {return node2;}
 private:
 	unsigned long id;
 	Node *node1;

@@ -10,7 +10,7 @@
 
 #define NETWORK_FILE_NAME "network.ncr"
 
-const Graph NetworkService::getGraph() const {
+Graph NetworkService::getGraph() const {
     int node_count;
     int link_count;
     

@@ -5,7 +5,7 @@
 
 class NetworkService {
 public:
-    const Graph getGraph() const;
+    Graph getGraph() const;
     bool saveGraph(const Graph& graph);
 
 private:

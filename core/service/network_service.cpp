@@ -10,7 +10,7 @@
 
 #define NETWORK_FILE_NAME "network.ncr"
 
-const Graph& NetworkService::getGraph() const {
+const Graph NetworkService::getGraph() const {
     int node_count;
     int link_count;
     
@@ -19,27 +19,28 @@ const Graph& NetworkService::getGraph() const {
     in >> node_count;
     in >> link_count;
 
-    std::cout << "1" << std::endl;
     std::map<unsigned long, Node*> node_map;
     for (int i = 0; i < node_count; ++i) {
         Node * node = new Node();
         in >> *node;
         node_map.insert(std::make_pair(node->getId(), node));
+        std::cout << node->getId();
+        std::cout << node->getName();
+        std::cout << node->getCode();
+
     }
 
-    std::cout << "2" << std::endl;
-
-    std::list<Link> links;
+    std::list<Link*> links;
     for (int i = 0; i < link_count; ++i) {
         unsigned long id;
         unsigned long n1;
         unsigned long n2;
+        in >> id >> n1 >> n2;
 
-        links.push_back(Link(id, node_map[n1], node_map[n2]));
+        Link * link = new Link(id, node_map[n1], node_map[n2]);
+
+        links.push_back(link);
     }
-
-    std::cout << "3" << std::endl;
-
 
     in.close();
 
@@ -53,12 +54,12 @@ struct NodeComparator {
 bool NetworkService::saveGraph(const Graph& graph) {
     std::set<Node*, NodeComparator> nodes;
 
-    std::list<Link> links = graph.getLinks();
+    std::list<Link*> links = graph.getLinks();
     std::cout << links.size();
 
-    for (std::list<Link>::const_iterator it = links.begin(); it != links.end(); ++it) {
-        nodes.insert(it->getNode1());
-        nodes.insert(it->getNode2());
+    for (std::list<Link*>::const_iterator it = links.begin(); it != links.end(); ++it) {
+        nodes.insert((*it)->getNode1());
+        nodes.insert((*it)->getNode2());
     }
 
     unsigned long id = 1;
@@ -76,8 +77,8 @@ bool NetworkService::saveGraph(const Graph& graph) {
     }
 
     id = 1;
-    for (std::list<Link>::const_iterator it = links.begin(); it != links.end(); ++it, ++id) {
-        out << id << " " << it->getNode1()->getId() << " " << it->getNode2()->getId() << "\n";
+    for (std::list<Link*>::const_iterator it = links.begin(); it != links.end(); ++it, ++id) {
+        out << id << " " << (*it)->getNode1()->getId() << " " << (*it)->getNode2()->getId() << "\n";
     }
 
     out.close();

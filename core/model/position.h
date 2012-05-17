@@ -15,6 +15,8 @@ public:
     int getY() const {return y;}
     int getFloor() const {return floor;}
     int getBuilding() const {return building;}
+
+    Position& operator= (const Position& pos);
 private:
     int x;
     int y;

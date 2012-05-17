@@ -21,6 +21,8 @@ public:
 
     void setId(unsigned long _id) {id = _id;}
 
+    Node& operator= (const Node& node);
+
 private:
     unsigned long id;
     std::string name;

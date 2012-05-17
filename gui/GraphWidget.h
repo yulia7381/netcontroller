@@ -2,6 +2,10 @@
 #define GRAPHWIDGET_H
 
 #include <QtGui/QGraphicsView>
+#include <QSet>
+#include <QHash>
+#include <QForeachContainer>
+
 #include "../core/model/graph.h"
 
 class GraphicNode;
@@ -30,12 +34,17 @@ private:
 	int timerId;
 	GraphicNode *centerNode;
 	Graph* graphInfo;
-	QList<GraphicNode*> nodes;
-	QList<GraphicEdge*> edges;
-
+	QSet<GraphicNode*> nodes;
+	QSet<GraphicEdge*> edges;
+	QHash<Node*, GraphicNode*> nodeInfoToGNode;
 
 private:
 	QGraphicsScene* initScene(Graph *graphInfo);
+	GraphicNode* getGNode(Node * nodeInfo);
+	void addNodes(QGraphicsScene* scene, const QSet<GraphicNode*> &set);
+	void addEdges(QGraphicsScene* scene, const QSet<GraphicEdge*> &set);
+
+
 };
 
 #endif

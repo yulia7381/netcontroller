@@ -17,3 +17,10 @@ std::istream& operator>> (std::istream& is, Position& p) {
 
 	return is;
 }
+
+Position& Position::operator= (const Position& pos) {
+	x = pos.x;
+	y = pos.y;
+	floor = pos.floor;
+	building = pos.building;
+}

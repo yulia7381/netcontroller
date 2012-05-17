@@ -15,10 +15,10 @@ int main() {
     // Node n3(0, "name3", "code3", Position(5,1, 5,1));
 
 
-    // std::list<Link> links;
-    // links.push_back(Link(0, &n1, &n2));
-    // links.push_back(Link(0, &n1, &n3));
-    // links.push_back(Link(0, &n2, &n3));
+    // std::list<Link*> links;
+    // links.push_back(new Link(0, &n1, &n2));
+    // links.push_back(new Link(0, &n1, &n3));
+    // links.push_back(new Link(0, &n2, &n3));
 
 
     // Graph gr(links);

@@ -3,7 +3,8 @@ TARGET = NetDNK
 QT += core \
     gui \
     sql
-HEADERS += GraphicNode.h \
+HEADERS += Res.h \
+    GraphicNode.h \
     GraphWidget.h \
     GraphicEdge.h \
     ../core/model/node_status.h \
@@ -16,10 +17,10 @@ HEADERS += GraphicNode.h \
     ../core/model/link.h \
     ../core/model/node.h \
     ../core/model/user.h
-SOURCES += GraphicEdge.cpp \
+SOURCES += Res.cpp \
+    GraphicEdge.cpp \
     GraphicNode.cpp \
     GraphWidget.cpp \
-    GraphicEdge.cpp \
     ../core/model/node_status.cpp \
     ../core/model/position.cpp \
     ../core/service/network_service.cpp \

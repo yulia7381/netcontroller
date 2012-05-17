@@ -11,7 +11,11 @@
 class GraphicNode;
 class GraphicEdge;
 
+
 class GraphWidget: public QGraphicsView {
+
+Q_OBJECT;
+
 public:
 	GraphWidget(Graph *graphInfo, QWidget *parent = 0);
 
@@ -21,6 +25,7 @@ public slots:
 	void shuffle();
 	void zoomIn();
 	void zoomOut();
+	void nodeClickedSlot();
 
 protected:
 	void keyPressEvent(QKeyEvent *event);

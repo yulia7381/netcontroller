@@ -11,7 +11,10 @@ QT_BEGIN_NAMESPACE
 class QGraphicsSceneMouseEvent;
 QT_END_NAMESPACE
 
-class GraphicNode: public QGraphicsItem {
+class GraphicNode: public QObject, public QGraphicsItem{
+
+	Q_OBJECT;
+
 public:
 	GraphicNode(GraphWidget *graphWidget, Node *nodeInfo);
 
@@ -43,6 +46,9 @@ private:
 	QPointF newPos;
 	GraphWidget *graph;
 	Node* nodeInfo;
+
+signals:
+	void nodeClickedSignal();
 };
 
 #endif

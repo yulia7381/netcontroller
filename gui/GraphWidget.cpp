@@ -14,51 +14,9 @@ GraphWidget::GraphWidget(Graph *graphInfo, QWidget *parent) :
 	setViewportUpdateMode(BoundingRectViewportUpdate);
 	setRenderHint(QPainter::Antialiasing);
 	setTransformationAnchor(AnchorUnderMouse);
-	scale(qreal(0.8), qreal(0.8));
-	setMinimumSize(400, 400);
+//	scale(qreal(0.8), qreal(0.8));
+	setMinimumSize(600, 600);
 	setWindowTitle(tr("Network View"));
-
-//	GraphicNode *node1 = new GraphicNode(this,
-//			new Node(1, "node1", "code1", Position(10, 10, 1, 2)));
-//	GraphicNode *node2 = new GraphicNode(this,
-//			new Node(1, "node1", "code1", Position(20, 20, 1, 2)));
-//	GraphicNode *node3 = new GraphicNode(this,
-//			new Node(1, "node1", "code1", Position(30, 30, 1, 2)));
-//	GraphicNode *node4 = new GraphicNode(this,
-//			new Node(1, "node1", "code1", Position(40, 20, 1, 2)));
-//	centerNode = new GraphicNode(this,
-//			new Node(1, "node1", "code1", Position(50, 60, 1, 2)));
-//	GraphicNode *node6 = new GraphicNode(this,
-//			new Node(1, "node1", "code1", Position(50, 70, 1, 2)));
-//	GraphicNode *node7 = new GraphicNode(this,
-//			new Node(1, "node1", "code1", Position(70, 80, 1, 2)));
-//	GraphicNode *node8 = new GraphicNode(this,
-//			new Node(1, "node1", "code1", Position(90, 70, 1, 2)));
-//	GraphicNode *node9 = new GraphicNode(this,
-//			new Node(1, "node1", "code1", Position(80, 90, 1, 2)));
-//	scene->addItem(node1);
-//	scene->addItem(node2);
-//	scene->addItem(node3);
-//	scene->addItem(node4);
-//	scene->addItem(centerNode);
-//	scene->addItem(node6);
-//	scene->addItem(node7);
-//	scene->addItem(node8);
-//	scene->addItem(node9);
-//	scene->addItem(new GraphicEdge(node1, node2));
-//	scene->addItem(new GraphicEdge(node2, node3));
-//	scene->addItem(new GraphicEdge(node2, centerNode));
-//	scene->addItem(new GraphicEdge(node3, node6));
-//	scene->addItem(new GraphicEdge(node4, node1));
-//	scene->addItem(new GraphicEdge(node4, centerNode));
-//	scene->addItem(new GraphicEdge(centerNode, node6));
-//	scene->addItem(new GraphicEdge(centerNode, node8));
-//	scene->addItem(new GraphicEdge(node6, node9));
-//	scene->addItem(new GraphicEdge(node7, node4));
-//	scene->addItem(new GraphicEdge(node8, node7));
-//	scene->addItem(new GraphicEdge(node9, node8));
-//	scene->addItem(new GraphicEdge(node9, node1));
-//	scene->addItem(new GraphicEdge(node9, node2));
 
 }
 
@@ -111,16 +69,12 @@ void GraphWidget::itemMoved() {
 void GraphWidget::keyPressEvent(QKeyEvent *event) {
 	switch (event->key()) {
 	case Qt::Key_Up:
-		centerNode->moveBy(0, -20);
 		break;
 	case Qt::Key_Down:
-		centerNode->moveBy(0, 20);
 		break;
 	case Qt::Key_Left:
-		centerNode->moveBy(-20, 0);
 		break;
 	case Qt::Key_Right:
-		centerNode->moveBy(20, 0);
 		break;
 	case Qt::Key_Plus:
 		zoomIn();
@@ -194,3 +148,8 @@ void GraphWidget::zoomIn() {
 void GraphWidget::zoomOut() {
 	scaleView(1 / qreal(1.2));
 }
+
+void GraphWidget::nodeClickedSlot(){
+	qDebug() << "Clicked: " << 999;
+}
+

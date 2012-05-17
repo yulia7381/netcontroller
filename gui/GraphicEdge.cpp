@@ -67,6 +67,7 @@ void GraphicEdge::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
 		return;
 
 // Draw the line itself
+
 	painter->setPen(
 			QPen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 	painter->drawLine(line);

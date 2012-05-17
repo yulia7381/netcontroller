@@ -2,6 +2,8 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QStyleOption>
+#include <QDebug>
+#include <QObject>
 
 #include "GraphicEdge.h"
 #include "GraphicNode.h"
@@ -14,6 +16,8 @@ GraphicNode::GraphicNode(GraphWidget *graphWidget, Node *nodeInfo)
 	setCacheMode(DeviceCoordinateCache);
 	setZValue(-1);
 	setPos(nodeInfo->getPosition().getX(), nodeInfo->getPosition().getY());
+
+    QObject::connect(this, SIGNAL(nodeClickedSignal()), graph, SLOT(nodeClickedSlot()));
 }
 
 void GraphicNode::addEdge(GraphicEdge *edge) {
@@ -59,16 +63,17 @@ void GraphicNode::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
 	if (option->state & QStyle::State_Sunken) {
 		gradient.setCenter(3, 3);
 		gradient.setFocalPoint(3, 3);
-		gradient.setColorAt(1, QColor(Qt::yellow).light(120));
-		gradient.setColorAt(0, QColor(Qt::darkYellow).light(120));
+		gradient.setColorAt(1, QColor(Qt::blue).light(120));
+		gradient.setColorAt(0, QColor(Qt::darkBlue).light(120));
 	} else {
-		gradient.setColorAt(0, Qt::yellow);
-		gradient.setColorAt(1, Qt::darkYellow);
+		gradient.setColorAt(0, Qt::blue);
+		gradient.setColorAt(1, Qt::darkBlue);
 	}
 	painter->setBrush(gradient);
 
 	painter->setPen(QPen(Qt::black, 0));
 	painter->drawEllipse(-10, -10, 20, 20);
+
 }
 
 
@@ -91,10 +96,13 @@ QVariant GraphicNode::itemChange(GraphicsItemChange change, const QVariant &valu
 void GraphicNode::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	update();
 	QGraphicsItem::mousePressEvent(event);
+    emit nodeClickedSignal();
 }
 
 void GraphicNode::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 	update();
 	QGraphicsItem::mouseReleaseEvent(event);
 }
+
+
 

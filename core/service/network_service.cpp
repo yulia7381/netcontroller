@@ -1,9 +1,9 @@
-#include "network_service.h"
-
 #include <set>
 #include <fstream>
 #include <ios>
 #include <map>
+
+#include "network_service.h"
 
 #define NETWORK_FILE_NAME "network.ncr"
 

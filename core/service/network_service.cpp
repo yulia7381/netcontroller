@@ -1,6 +1,5 @@
 #include "network_service.h"
 
-#include "../model/link.h"
 #include "../model/node.h"
 
 #include <set>
@@ -10,73 +9,65 @@
 
 #define NETWORK_FILE_NAME "network.ncr"
 
-Graph NetworkService::getGraph() const {
-    int node_count;
-    int link_count;
-    
-    std::ifstream in(NETWORK_FILE_NAME, std::ios::in);
+namespace core {
+    Graph<Node*, bool> NetworkService::getGraph() const {
+        int node_count;
+        int link_count;
+        
+        std::ifstream in(NETWORK_FILE_NAME, std::ios::in);
 
-    in >> node_count;
-    in >> link_count;
+        in >> node_count;
+        in >> link_count;
 
-    std::map<unsigned long, Node*> node_map;
-    for (int i = 0; i < node_count; ++i) {
-        Node * node = new Node();
-        in >> *node;
-        node_map.insert(std::make_pair(node->getId(), node));
+        Graph<Node*, bool> graph;
+
+        std::map<unsigned long, Node*> node_map;
+        for (int i = 0; i < node_count; ++i) {
+            Node * node = new Node();
+            in >> *node;
+            node_map.insert(std::make_pair(node->getId(), node));
+            graph.addNode(node);
+        }
+
+        for (int i = 0; i < link_count; ++i) {
+            unsigned long id;
+            unsigned long n1;
+            unsigned long n2;
+            in >> id >> n1 >> n2;
+
+            graph.addLink(node_map[n1], node_map[n2], true);
+        }
+
+        in.close();
+
+        return graph;
     }
 
-    std::list<Link*> links;
-    for (int i = 0; i < link_count; ++i) {
-        unsigned long id;
-        unsigned long n1;
-        unsigned long n2;
-        in >> id >> n1 >> n2;
+    struct NodeComparator {
+        bool operator() (const Node* l, const Node* r) const {return l < r;}
+    };
 
-        Link * link = new Link(id, node_map[n1], node_map[n2]);
+    bool NetworkService::saveGraph(const Graph<Node*, bool>& graph) {
+        std::list<Node*> nodes = graph.getNodes();
+        nodes.unique();
 
-        links.push_back(link);
+        std::list<NodeLink<Node*, bool> > links = graph.getLinks();
+
+        std::ofstream out(NETWORK_FILE_NAME, std::ios::out);
+
+        out << nodes.size() << "\n";
+        out << links.size() << "\n";
+
+        for (std::list<Node*>::const_iterator it = nodes.begin(); it != nodes.end(); ++it) {
+            out << **it << "\n";
+        }
+
+        int id = 1;
+        for (std::list<NodeLink<Node*, bool> >::const_iterator it = links.begin(); it != links.end(); ++it, ++id) {
+            out << id << " " << it->getNode1()->getId() << " " << it->getNode2()->getId() << "\n";
+        }
+
+        out.close();
+        return true;
     }
-
-    in.close();
-
-    return Graph(links);
-}
-
-struct NodeComparator {
-    bool operator() (const Node* l, const Node* r) const {return l < r;}
-};
-
-bool NetworkService::saveGraph(const Graph& graph) {
-    std::set<Node*, NodeComparator> nodes;
-
-    std::list<Link*> links = graph.getLinks();
-    std::cout << links.size();
-
-    for (std::list<Link*>::const_iterator it = links.begin(); it != links.end(); ++it) {
-        nodes.insert((*it)->getNode1());
-        nodes.insert((*it)->getNode2());
-    }
-
-    unsigned long id = 1;
-    for (std::set<Node*, NodeComparator>::iterator it = nodes.begin(); it != nodes.end(); ++it, ++id) {
-        const_cast<Node*>(*it)->setId(id);
-    }
-
-    std::ofstream out(NETWORK_FILE_NAME, std::ios::out);
-
-    out << nodes.size() << "\n";
-    out << links.size() << "\n";
-
-    for (std::set<Node*, NodeComparator>::iterator it = nodes.begin(); it != nodes.end(); ++it) {
-        out << **it << "\n";
-    }
-
-    id = 1;
-    for (std::list<Link*>::const_iterator it = links.begin(); it != links.end(); ++it, ++id) {
-        out << id << " " << (*it)->getNode1()->getId() << " " << (*it)->getNode2()->getId() << "\n";
-    }
-
-    out.close();
-    return true;
 }

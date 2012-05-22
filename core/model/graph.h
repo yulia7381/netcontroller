@@ -17,10 +17,10 @@ namespace core {
             return this;
         };
 
-        Node getNode1();
-        Node getNode2();
+        Node getNode1() const {return node1;};
+        Node getNode2() const {return node2;};
 
-        Link getLink();
+        Link getLink() const {return link;};
     private:
         Node node1;
         Node node2;

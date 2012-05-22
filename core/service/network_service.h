@@ -2,14 +2,18 @@
 #define NETWORK_SERVICE_H
 
 #include "../model/graph.h"
+#include "../model/node.h"
 
-class NetworkService {
-public:
-    Graph getGraph() const;
-    bool saveGraph(const Graph& graph);
+namespace core {
+    class NetworkService {
+    public:
+        Graph<Node*, bool> getGraph() const;
+        bool saveGraph(const Graph<Node*, bool>& graph);
 
-private:
+    private:
 
-};
+    };
+}
+
 
 #endif

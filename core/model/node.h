@@ -19,7 +19,7 @@ public:
     std::string getCode() const {return code;}
     Position getPosition() const {return position;}
 
-    void setId(unsigned long _id) {id = _id;}
+    void setId(unsigned long id) {id = id;}
     void setPosition(const Position& pos) {position = pos;}
 
 

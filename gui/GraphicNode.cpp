@@ -10,7 +10,7 @@
 #include "GraphWidget.h"
 
 GraphicNode::GraphicNode(GraphWidget *graphWidget, Node *nodeInfo)
-		: graph(graphWidget), nodeInfo(nodeInfo) {
+		: Node(*nodeInfo), graph(graphWidget) {
 	setFlag(ItemIsMovable);
 	setFlag(ItemSendsGeometryChanges);
 	setCacheMode(DeviceCoordinateCache);
@@ -85,11 +85,11 @@ QVariant GraphicNode::itemChange(GraphicsItemChange change, const QVariant &valu
 		}
 		graph->itemMoved();
 
-		nodeInfo->setPosition(core::Position(
+		setPosition(core::Position(
 				this->x(),
 				this->y(),
-				nodeInfo->getPosition().getFloor(),
-				nodeInfo->getPosition().getBuilding()
+				getPosition().getFloor(),
+				getPosition().getBuilding()
 		));
 
 		break;

@@ -21,6 +21,8 @@ namespace core {
 		Position getPosition() const {return position;}
 
 		void setId(unsigned long id) {this->id = id;}
+		void setName(const std::string& name) {this->name = name;}
+		void setCode(const std::string& code) {this->code = code;}
 		void setPosition(const core::Position& pos) {position = pos;}
 
 

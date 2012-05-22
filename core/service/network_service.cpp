@@ -17,7 +17,7 @@ namespace core {
         in >> node_count;
         in >> link_count;
 
-        Graph<Node*, bool> graph;
+        core::Graph<core::Node*, bool> graph;
 
         std::map<unsigned long, Node*> node_map;
         for (int i = 0; i < node_count; ++i) {

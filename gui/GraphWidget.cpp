@@ -27,18 +27,13 @@ QGraphicsScene* GraphWidget::initScene(Graph *graphInfo) {
 	scene->setItemIndexMethod(QGraphicsScene::NoIndex);
 	scene->setSceneRect(-200, -200, 400, 400);
 	const std::list<core::NodeLink<Node*, bool> > links = graphInfo->getLinks();
-//	for (std::list<Link*>::const_iterator it = links.begin(); it != links.end();
-//			++it) {
-//		Link* link = *it;
-//		GraphicNode *graphNode1 = getGNode(link->getNode1());
-//		GraphicNode *graphNode2 = getGNode(link->getNode2());
-//		GraphicEdge *edge = new GraphicEdge(graphNode1, graphNode2);
-//		edges.insert(edge);
-//	}
+	for (std::list<core::NodeLink<Node*, bool> >::const_iterator it = links.begin(); it != links.end(); ++it) {
+		GraphicEdge *edge = new GraphicEdge(getGNode(it->getNode1()), getGNode(it->getNode2()));
+		edges.insert(edge);
+	}
 
 	addNodes(scene, nodes);
 	addEdges(scene, edges);
-
 
 	return scene;
 }
@@ -105,15 +100,25 @@ void GraphWidget::wheelEvent(QWheelEvent *event) {
 void GraphWidget::mousePressEvent(QMouseEvent *event) {
 	if(waitToAdd){
 		QPoint p = event->pos();
-		GraphicNode* newNode = getGNode(new Node(1, "new", "new-code", core::Position(p.x() - this->width()/2, p.y() - this->height()/2, 1, 1)));
-		this->scene()->addItem(newNode);
+		Node* nodeInfo = new Node(getNewId(), "new", "new-code", core::Position(p.x() - this->width()/2, p.y() - this->height()/2, 1, 1));
+		this->scene()->addItem(getGNode(nodeInfo));
+		nss.saveStatus(*nodeInfo, core::NodeStatus(time(0), 0, 0, 0, 0));
 		waitToAdd = false;
 	}
 	QGraphicsView::mousePressEvent(event);
 }
 
+unsigned long GraphWidget::getNewId(){
+	unsigned long maxId = 0;
+	foreach(GraphicNode*node, nodes){
+		unsigned long id = node->getId();
+		maxId = maxId > id ? maxId : id;
+	}
+	return maxId + 1;
+}
+
 void GraphWidget::drawBackground(QPainter *painter, const QRectF &rect) {
-	Q_UNUSED(rect);
+//	Q_UNUSED(rect);
 
 	// Shadow
 	QRectF sceneRect = this->sceneRect();
@@ -174,6 +179,8 @@ void GraphWidget::nodeClickedSlot(GraphicNode* clickedNode){
 	} else {
 		firstSelected = secondSelected = 0;
 	}
+
+	emit nodeClickedSignal(clickedNode);
 }
 
 void GraphWidget::processSelectedNodes(){
@@ -183,15 +190,21 @@ void GraphWidget::processSelectedNodes(){
 }
 
 Graph GraphWidget::getGraph(){
-//	std::list<Link*> links;
-//	foreach(GraphicEdge * edge, edges){
-//		links.push_back(new Link(
-//				1,
-//				edge->sourceNode()->getNodeInfo(),
-//				edge->destNode()->getNodeInfo()
-//		));
-//	}
-	return Graph();
+	core::Graph<core::Node*, bool> graph;
+
+	foreach(GraphicNode* node, nodes){
+		graph.addNode(node);
+	}
+
+	foreach(GraphicEdge * edge, edges){
+		graph.addLink(
+				edge->sourceNode(),
+				edge->destNode(),
+				true
+		);
+	}
+
+	return graph;
 }
 
 

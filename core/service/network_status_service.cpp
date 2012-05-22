@@ -13,7 +13,6 @@ namespace core {
 
     bool NetworkStatusService::saveStatus(const Node& node, const NodeStatus& status) {
         std::ofstream out(STATUS_FILE_NAME, std::ios::app);
-
         out << node.getId() << " " << status << "\n";
         out.close();
         return true;
@@ -32,7 +31,6 @@ namespace core {
                 result.push_back(status);
             }
         }
-
 
         in.close();
         return result;

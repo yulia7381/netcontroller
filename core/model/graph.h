@@ -31,18 +31,44 @@ namespace core {
     class Graph {
     public:
         Graph() {};
-        Graph(const Graph& gr);
+        Graph(const Graph& gr) : nodes(gr.nodes), links(gr.links) {};
 
-        Graph& operator= (const Graph& gr);
+        Graph& operator= (const Graph& gr) { 
+            nodes = gr.nodes;
+            links = gr.links;
+            return *this;
+        };
 
         const std::list<Node>& getNodes() const {return nodes;};
         const std::list<NodeLink<Node, Link> >& getLinks() const {return links;};
 
-        const std::list<NodeLink<Node, Link> >& getLinksFromNode(Node node);
-        const Link& getLink(Node node1, Node node2);
+        const std::list<NodeLink<Node, Link> >& getLinksFromNode(Node node) {
+            std::list<NodeLink<Node, Link> > result;
+            typedef NodeLink<Node, Link> node_link;
+            typedef typename std::list<node_link> node_link_list;
+            typedef typename node_link_list::const_iterator iter;
 
-        void addNode(Node node);
-        void addLink(Node node1, Node node2, Link link);
+            for (iter it = links.begin(); it != links.end(); ++it) {
+                if (node == it->getNode1()) {
+                    result.push_back(*it);
+                }
+            }
+            return result;
+        };
+        const Link& getLink(Node node1, Node node2) {
+            typedef NodeLink<Node, Link> node_link;
+            typedef typename std::list<node_link> node_link_list;
+            typedef typename node_link_list::const_iterator iter;
+
+            for (iter it = links.begin(); it != links.end(); ++it) {
+                if (node1 == it->getNode1() && node2 == it->getNode2()) {
+                    return it->getLink();
+                }
+            }
+        };
+
+        void addNode(Node node) {nodes.push_back(node);};
+        void addLink(Node node1, Node node2, Link link) {links.push_back(NodeLink<Node, Link>(node1, node2, link));};
 
     private:
         std::list<Node> nodes;

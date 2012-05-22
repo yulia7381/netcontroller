@@ -14,7 +14,7 @@ namespace core {
             node1 = lnk.node1;
             node2 = lnk.node2;
             link = lnk.link;
-            return this;
+            return *this;
         };
 
         Node getNode1() const {return node1;};
@@ -34,15 +34,16 @@ namespace core {
         Graph(const Graph& gr);
 
         Graph& operator= (const Graph& gr);
-        
-        std::list<Node> getNodes() const {return nodes;};
-        std::list<NodeLink<Node, Link> > getLinks() const {return links;};
 
-        std::list<NodeLink<Node, Link> > getLinksFromNode(Node node);
-        Link getLink(Node node1, Node node2);
+        const std::list<Node>& getNodes() const {return nodes;};
+        const std::list<NodeLink<Node, Link> >& getLinks() const {return links;};
+
+        const std::list<NodeLink<Node, Link> >& getLinksFromNode(Node node);
+        const Link& getLink(Node node1, Node node2);
 
         void addNode(Node node);
         void addLink(Node node1, Node node2, Link link);
+
     private:
         std::list<Node> nodes;
         std::list<NodeLink<Node, Link> > links;

@@ -7,7 +7,7 @@
 int main(int argc, char **argv) {
 	QApplication app(argc, argv);
 	qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
-    NetworkService ns;
+    core::NetworkService ns;
 
 //	std::list<Link*> links;
 //	Node * node1 = new Node(1,"1","2", Position(10, 15, 1, 7));
@@ -16,6 +16,7 @@ int main(int argc, char **argv) {
 //		links.push_back(new Link(1, node1, node2));
 //		node1 = node2;
 //	}
+
 
 	MainWindow mainWindow(new GraphWidget(&ns.getGraph()));
 //	MainWindow mainWindow(new GraphWidget(new Graph(links)));

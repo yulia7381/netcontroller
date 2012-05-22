@@ -7,10 +7,12 @@
 #include <QForeachContainer>
 
 #include "../core/model/graph.h"
+#include "../core/model/node.h"
+
+#include "typedefs.h"
 
 class GraphicNode;
 class GraphicEdge;
-
 
 class GraphWidget: public QGraphicsView {
 

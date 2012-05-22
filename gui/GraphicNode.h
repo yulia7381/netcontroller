@@ -5,6 +5,9 @@
 #include <QList>
 #include "../core/model/node.h"
 
+#include "typedefs.h"
+
+
 class GraphicEdge;
 class GraphWidget;
 QT_BEGIN_NAMESPACE

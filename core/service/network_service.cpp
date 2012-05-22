@@ -1,7 +1,5 @@
 #include "network_service.h"
 
-#include "../model/node.h"
-
 #include <set>
 #include <fstream>
 #include <ios>
@@ -13,7 +11,7 @@ namespace core {
     Graph<Node*, bool> NetworkService::getGraph() const {
         int node_count;
         int link_count;
-        
+
         std::ifstream in(NETWORK_FILE_NAME, std::ios::in);
 
         in >> node_count;

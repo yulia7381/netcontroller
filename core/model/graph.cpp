@@ -11,11 +11,11 @@ namespace core {
     Graph<Node, Link>& Graph<Node, Link>::operator= (const Graph<Node, Link>& gr) {
         nodes = gr.nodes;
         links = gr.links;
-        return this;
+        return *this;
     }
 
     template<class Node, class Link>
-    std::list<NodeLink<Node, Link> > Graph<Node, Link>::getLinksFromNode(Node node) {
+    const std::list<NodeLink<Node, Link> >& Graph<Node, Link>::getLinksFromNode(Node node) {
         std::list<NodeLink<Node, Link> > result;
         typedef NodeLink<Node, Link> node_link;
         typedef typename std::list<node_link> node_link_list;
@@ -30,7 +30,7 @@ namespace core {
     }
 
     template<class Node, class Link>
-    Link Graph<Node, Link>::getLink(Node node1, Node node2) {
+    const Link& Graph<Node, Link>::getLink(Node node1, Node node2) {
         typedef NodeLink<Node, Link> node_link;
         typedef typename std::list<node_link> node_link_list;
         typedef typename node_link_list::const_iterator iter;

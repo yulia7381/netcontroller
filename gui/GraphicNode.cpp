@@ -85,7 +85,7 @@ QVariant GraphicNode::itemChange(GraphicsItemChange change, const QVariant &valu
 		}
 		graph->itemMoved();
 
-		nodeInfo->setPosition(Position(
+		nodeInfo->setPosition(core::Position(
 				this->x(),
 				this->y(),
 				nodeInfo->getPosition().getFloor(),

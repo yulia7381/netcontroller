@@ -3,7 +3,7 @@
 #include <iostream>
 
 namespace core {
-        
+
     std::ostream& operator<< (std::ostream& os, const Node& n){
         os << n.getId() << "\n";
         os << n.getName() << "\n";
@@ -29,6 +29,7 @@ namespace core {
         name = node.name;
         code = node.code;
         position = node.position;
+        return *this;
     }
 
 }

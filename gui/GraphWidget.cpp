@@ -6,6 +6,7 @@
 
 #include <qmath.h>
 
+
 GraphWidget::GraphWidget(Graph *graphInfo, QWidget *parent) :
 		QGraphicsView(parent), timerId(0), graphInfo(graphInfo),
 		firstSelected(0), secondSelected(0), waitToAdd(false), waitToAddEdge(false) {
@@ -25,15 +26,15 @@ QGraphicsScene* GraphWidget::initScene(Graph *graphInfo) {
 	QGraphicsScene *scene = new QGraphicsScene(this);
 	scene->setItemIndexMethod(QGraphicsScene::NoIndex);
 	scene->setSceneRect(-200, -200, 400, 400);
-	const std::list<Link*> &links = graphInfo->getLinks();
-	for (std::list<Link*>::const_iterator it = links.begin(); it != links.end();
-			++it) {
-		Link* link = *it;
-		GraphicNode *graphNode1 = getGNode(link->getNode1());
-		GraphicNode *graphNode2 = getGNode(link->getNode2());
-		GraphicEdge *edge = new GraphicEdge(graphNode1, graphNode2);
-		edges.insert(edge);
-	}
+	const std::list<core::NodeLink<Node*, bool> > links = graphInfo->getLinks();
+//	for (std::list<Link*>::const_iterator it = links.begin(); it != links.end();
+//			++it) {
+//		Link* link = *it;
+//		GraphicNode *graphNode1 = getGNode(link->getNode1());
+//		GraphicNode *graphNode2 = getGNode(link->getNode2());
+//		GraphicEdge *edge = new GraphicEdge(graphNode1, graphNode2);
+//		edges.insert(edge);
+//	}
 
 	addNodes(scene, nodes);
 	addEdges(scene, edges);
@@ -104,7 +105,7 @@ void GraphWidget::wheelEvent(QWheelEvent *event) {
 void GraphWidget::mousePressEvent(QMouseEvent *event) {
 	if(waitToAdd){
 		QPoint p = event->pos();
-		GraphicNode* newNode = getGNode(new Node(1, "new", "new-code", Position(p.x() - this->width()/2, p.y() - this->height()/2, 1, 1)));
+		GraphicNode* newNode = getGNode(new Node(1, "new", "new-code", core::Position(p.x() - this->width()/2, p.y() - this->height()/2, 1, 1)));
 		this->scene()->addItem(newNode);
 		waitToAdd = false;
 	}
@@ -182,15 +183,15 @@ void GraphWidget::processSelectedNodes(){
 }
 
 Graph GraphWidget::getGraph(){
-	std::list<Link*> links;
-	foreach(GraphicEdge * edge, edges){
-		links.push_back(new Link(
-				1,
-				edge->sourceNode()->getNodeInfo(),
-				edge->destNode()->getNodeInfo()
-		));
-	}
-	return Graph(links);
+//	std::list<Link*> links;
+//	foreach(GraphicEdge * edge, edges){
+//		links.push_back(new Link(
+//				1,
+//				edge->sourceNode()->getNodeInfo(),
+//				edge->destNode()->getNodeInfo()
+//		));
+//	}
+	return Graph();
 }
 
 

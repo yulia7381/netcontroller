@@ -1,14 +1,12 @@
 #include "../service/network_service.h"
 #include "../model/node.h"
-#include "../model/link.h"
 #include "../model/graph.h"
-
 
 #include <string>
 #include <iostream>
 
 int main3() {
-    NetworkService ns;
+    core::NetworkService ns;
 
     // Node n1(0, "name1", "code1", Position(1,2, 5,1));
     // Node n2(0, "name2", "code2", Position(2,4, 5,1));
@@ -25,11 +23,11 @@ int main3() {
 
     // ns.saveGraph(gr);
     std::cout << "start";
-    Graph gr = ns.getGraph();
+    core::Graph<core::Node*, bool> gr = ns.getGraph();
     std::cout << "start" << std::endl;
 
 
     // std::cout << gr.getLinks().size();
 
-
+    return 0;
 }

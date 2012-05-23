@@ -32,6 +32,11 @@ QGraphicsScene* GraphWidget::initScene(Graph *graphInfo) {
 		edges.insert(edge);
 	}
 
+	const std::list<Node*> allNodes = graphInfo->getNodes();
+	for (std::list<Node*>::const_iterator it = allNodes.begin(); it != allNodes.end(); ++it) {
+		getGNode(*it);
+	}
+
 	addNodes(scene, nodes);
 	addEdges(scene, edges);
 

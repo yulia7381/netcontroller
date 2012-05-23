@@ -5,7 +5,6 @@ QT += core \
     sql
 HEADERS += typedefs.h \
     MainWindow.h \
-    Res.h \
     GraphicNode.h \
     GraphWidget.h \
     GraphicEdge.h \
@@ -29,7 +28,6 @@ SOURCES += MainWindow.cpp \
     ../core/service/user_service.cpp \
     ../core/test/network_service_test.cpp \
     ../core/test/user_service_test.cpp \
-    Res.cpp \
     GraphicEdge.cpp \
     GraphicNode.cpp \
     GraphWidget.cpp \

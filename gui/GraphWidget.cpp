@@ -86,15 +86,16 @@ void GraphWidget::keyPressEvent(QKeyEvent *event) {
 		break;
 	case Qt::Key_Space:
 	case Qt::Key_Enter:
-		shuffle();
+//		shuffle();
 		break;
 	default:
 		QGraphicsView::keyPressEvent(event);
+
 		break;
 	}
 }
 
-void GraphWidget::timerEvent(QTimerEvent *event) {
+void GraphWidget::timerEvent(QTimerEvent *) {
 
 }
 
@@ -102,10 +103,11 @@ void GraphWidget::wheelEvent(QWheelEvent *event) {
 	scaleView(qPow((double) 2, -event->delta() / 240.0));
 }
 
+
 void GraphWidget::mousePressEvent(QMouseEvent *event) {
 	if(waitToAdd){
 		QPoint p = event->pos();
-		Node* nodeInfo = new Node(getNewId(), "new", "new-code", core::Position(p.x() - this->width()/2, p.y() - this->height()/2, 1, 1));
+		Node* nodeInfo = new core::NodeRouter(getNewId(), "new", "new-code", core::Position(p.x() - this->width()/2, p.y() - this->height()/2, 1, 1));
 		this->scene()->addItem(getGNode(nodeInfo));
 		nss.saveStatus(*nodeInfo, core::NodeStatus(time(0), 0, 0, 0, 0));
 		waitToAdd = false;
@@ -116,7 +118,7 @@ void GraphWidget::mousePressEvent(QMouseEvent *event) {
 unsigned long GraphWidget::getNewId(){
 	unsigned long maxId = 0;
 	foreach(GraphicNode*node, nodes){
-		unsigned long id = node->getId();
+		unsigned long id = node->getNodeInfo()->getId();
 		maxId = maxId > id ? maxId : id;
 	}
 	return maxId + 1;
@@ -198,13 +200,13 @@ Graph GraphWidget::getGraph(){
 	core::Graph<core::Node*, bool> graph;
 
 	foreach(GraphicNode* node, nodes){
-		graph.addNode(node);
+		graph.addNode(node->getNodeInfo());
 	}
 
 	foreach(GraphicEdge * edge, edges){
 		graph.addLink(
-				edge->sourceNode(),
-				edge->destNode(),
+				edge->sourceNode()->getNodeInfo(),
+				edge->destNode()->getNodeInfo(),
 				true
 		);
 	}

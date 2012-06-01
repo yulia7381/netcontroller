@@ -6,8 +6,13 @@
 #include <QHash>
 #include <QForeachContainer>
 
+
 #include "../core/model/graph.h"
 #include "../core/model/node.h"
+#include "../core/model/node_desktop.h"
+#include "../core/model/node_server.h"
+#include "../core/model/node_router.h"
+
 #include "../core/service/network_status_service.h"
 
 

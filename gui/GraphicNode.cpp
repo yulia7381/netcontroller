@@ -10,7 +10,7 @@
 #include "GraphWidget.h"
 
 GraphicNode::GraphicNode(GraphWidget *graphWidget, Node *nodeInfo)
-		: Node(*nodeInfo), graph(graphWidget) {
+		: nodeInfo(nodeInfo), graph(graphWidget) {
 	setFlag(ItemIsMovable);
 	setFlag(ItemSendsGeometryChanges);
 	setCacheMode(DeviceCoordinateCache);
@@ -59,15 +59,24 @@ void GraphicNode::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
 	painter->setBrush(Qt::darkGray);
 	painter->drawEllipse(-7, -7, 20, 20);
 
+	QColor color;
+	QColor colorDark;
+	switch(nodeInfo->getType()){
+		default:
+		case ROUTER : { color = Qt::blue; colorDark = Qt::darkBlue; } break;
+		case DESKTOP : { color = Qt::yellow; colorDark = Qt::darkYellow; } break;
+		case SERVER : { color = Qt::green; colorDark = Qt::darkGreen; } break;
+	}
+
 	QRadialGradient gradient(-3, -3, 10);
 	if (option->state & QStyle::State_Sunken) {
 		gradient.setCenter(3, 3);
 		gradient.setFocalPoint(3, 3);
-		gradient.setColorAt(1, QColor(Qt::blue).light(120));
-		gradient.setColorAt(0, QColor(Qt::darkBlue).light(120));
+		gradient.setColorAt(1, color.light(120));
+		gradient.setColorAt(0, colorDark.light(120));
 	} else {
-		gradient.setColorAt(0, Qt::blue);
-		gradient.setColorAt(1, Qt::darkBlue);
+		gradient.setColorAt(0, color);
+		gradient.setColorAt(1, colorDark);
 	}
 	painter->setBrush(gradient);
 
@@ -85,11 +94,11 @@ QVariant GraphicNode::itemChange(GraphicsItemChange change, const QVariant &valu
 		}
 		graph->itemMoved();
 
-		setPosition(core::Position(
+		nodeInfo->setPosition(core::Position(
 				this->x(),
 				this->y(),
-				getPosition().getFloor(),
-				getPosition().getBuilding()
+				nodeInfo->getPosition().getFloor(),
+				nodeInfo->getPosition().getBuilding()
 		));
 
 		break;

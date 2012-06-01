@@ -14,7 +14,7 @@ QT_BEGIN_NAMESPACE
 class QGraphicsSceneMouseEvent;
 QT_END_NAMESPACE
 
-class GraphicNode: public QObject, public QGraphicsItem, public core::Node {
+class GraphicNode: public QObject, public QGraphicsItem {
 
 	Q_OBJECT;
 
@@ -28,7 +28,7 @@ public:
 
 	QRectF boundingRect() const;
 	QPainterPath shape() const;
-//	Node* getNodeInfo() const { return nodeInfo; }
+	Node* getNodeInfo() const { return nodeInfo; }
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 			QWidget *widget);
 
@@ -41,8 +41,8 @@ protected:
 private:
 	QList<GraphicEdge *> edgeList;
 	QPointF newPos;
+	Node* nodeInfo;
 	GraphWidget *graph;
-//	Node* nodeInfo;
 
 signals:
 	void nodeClickedSignal(GraphicNode* clickedNode);

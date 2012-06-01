@@ -1,4 +1,9 @@
 #include "node.h"
+#include "node_router.h"
+#include "node_server.h"
+#include "node_desktop.h"
+
+
 
 #include <iostream>
 
@@ -9,6 +14,8 @@ namespace core {
         os << n.getName() << "\n";
         os << n.getCode() << "\n";
         os << n.getPosition() << "\n";
+        os << n.getType() << "\n";
+
         return os;
     }
 
@@ -18,9 +25,16 @@ namespace core {
         std::string code;
         Position pos;
 
-        is >> id >> name >> code >> pos;
+        int type;
 
-        n = Node(id, name, code, pos);
+        is >> id >> name >> code >> pos >> type;
+    	switch(NodeType(type)){
+    		default:
+    		case ROUTER : { n = NodeRouter(id, name, code, pos); } break;
+    		case DESKTOP : { n = NodeDesktop(id, name, code, pos); } break;
+    		case SERVER : { n = NodeServer(id, name, code, pos); } break;
+    	}
+
         return is;
     }
 

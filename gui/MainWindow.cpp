@@ -88,7 +88,7 @@ QHBoxLayout* MainWindow::createWidgetWithLabel(const char * labelName, QWidget* 
 	return layout;
 }
 
-void MainWindow::timerEvent(QTimerEvent *event) {
+void MainWindow::timerEvent(QTimerEvent *) {
 
 }
 
@@ -119,7 +119,7 @@ void MainWindow::addEdgeButtonClicked(){
 void MainWindow::saveNodeInfoButtonClicked(){
 //	qDebug() << "clicked3";
 	if(selectedNode != 0){
-		Node* nodeInfo = selectedNode;
+		Node* nodeInfo = selectedNode->getNodeInfo();
 		nodeInfo->setName(nameLineEdit->text().toStdString());
 		nodeInfo->setCode(codeLineEdit->text().toStdString());
 		core::Position oldPos = nodeInfo->getPosition();
@@ -142,7 +142,7 @@ void MainWindow::saveNodeInfoButtonClicked(){
 
 void MainWindow::selectNode(GraphicNode *node){
 //	qDebug() << "clicked3888" << (int*)node;
-	Node* info = node;
+	Node* info = node->getNodeInfo();
 	idLineEdit->setText(QString::number(info->getId()));
 	nameLineEdit->setText(QString::fromStdString(info->getName()));
 	codeLineEdit->setText(QString::fromStdString(info->getCode()));

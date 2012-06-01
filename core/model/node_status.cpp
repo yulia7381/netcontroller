@@ -8,6 +8,7 @@ namespace core {
         memory_usage = st.memory_usage;
         network_throughput = st.network_throughput;
         latency = st.latency;
+        return *this;
     }
 
     std::ostream& operator<< (std::ostream& out, const NodeStatus& st) {

@@ -21,8 +21,27 @@ namespace core {
 
         std::map<unsigned long, Node*> node_map;
         for (int i = 0; i < node_count; ++i) {
-            Node * node = new Node();
-            in >> *node;
+            Node * node;
+
+            //------------
+            unsigned long id;
+			std::string name;
+			std::string code;
+			Position pos;
+
+			int type;
+
+			in >> id >> name >> code >> pos >> type;
+			switch(NodeType(type)){
+				default:
+				case ROUTER : { node = new NodeRouter(id, name, code, pos); } break;
+				case DESKTOP : { node = new NodeDesktop(id, name, code, pos); } break;
+				case SERVER : { node = new NodeServer(id, name, code, pos); } break;
+			}
+
+			//----------------
+
+
             node_map.insert(std::make_pair(node->getId(), node));
             graph.addNode(node);
         }

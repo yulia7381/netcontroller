@@ -6,7 +6,7 @@
 #define USERS_FILE_NAME "users.ncr"
 
 namespace core {
-        
+
     const User& UserService::getUser(unsigned long id) const {
         std::map<unsigned long, User>::const_iterator it = users.find(id);
         if (it == users.end()) {
@@ -90,7 +90,7 @@ namespace core {
             in >> next_id;
             in >> count;
 
-            for (int i = 0; i < count; ++i) {
+            for (unsigned int i = 0; i < count; ++i) {
                 User user;
                 in >> user;
 

@@ -15,6 +15,8 @@ namespace core {
 		Node(const Node& node)
 				: id(node.id), name(node.name), code(node.code), position(node.position) {};
 
+        virtual ~Node(){};
+
 		unsigned long getId() const {return id;}
 		std::string getName() const {return name;}
 		std::string getCode() const {return code;}
@@ -28,7 +30,11 @@ namespace core {
 
 		Node& operator= (const Node& node);
 
-	private:
+		virtual NodeType getType() const =0;
+//		virtual NodeType getExtInfo() = 0;
+
+
+	protected:
 		unsigned long id;
 		std::string name;
 		std::string code;
